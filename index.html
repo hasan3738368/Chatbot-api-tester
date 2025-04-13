@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="A simple and user-friendly tool to test your Chatbot API keys with support for multiple endpoints and models including OpenAI, Deepseek, and OpenRouter.">
+    <meta name="keywords" content="chatbot, API key tester, OpenAI, GPT, Deepseek, chat interface, API endpoint, test API">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Sharof hasan">
+    <meta property="og:title" content="Chatbot API Key Tester - Test Your API Easily">
+    <meta property="og:description" content="A simple and user-friendly tool to test your Chatbot API keys with support for multiple endpoints and models.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-website-url.com/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Chatbot API Key Tester - Test Your API Easily">
+    <meta name="twitter:description" content="A simple and user-friendly tool to test your Chatbot API keys with multiple endpoints and models.">
+    
+    <title>Chatbot API Key Tester - Test Your API Easily</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/svgs/solid/robot.svg">
+    
+    <!-- Stylesheets -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7TER4CLDLD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-7TER4CLDLD');
+    </script>
+    
+    <style>
+        :root {
+            --primary-color: #3B82F6;
+            --success-color: #10B981;
+            --danger-color: #EF4444;
+            --warning-color: #F59E0B;
+            --info-color: #3B82F6;
+            --light-bg: #F9FAFB;
+            --light-card: #FFFFFF;
+            --light-text: #1F2937;
+            --light-border: #E5E7EB;
+            --dark-bg: #111827;
+            --dark-card: #1F2937;
+            --dark-text: #F9FAFB;
+            --dark-border: #374151;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .light {
+            background-color: var(--light-bg);
+            color: var(--light-text);
+        }
+
+        .dark {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        .light .card {
+            background-color: var(--light-card);
+            border-color: var(--light-border);
+        }
+
+        .dark .card {
+            background-color: var(--dark-card);
+            border-color: var(--dark-border);
+        }
+
+        .card {
+            transition: background-color 0.3s, border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .btn {
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .input-field {
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .input-field:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+
+        .dark .input-field {
+            background-color: var(--dark-card);
+            border-color: var(--dark-border);
+            color: var(--dark-text);
+        }
+
+        .light .input-field {
+            background-color: var(--light-card);
+            border-color: var(--light-border);
+            color: var(--light-text);
+        }
+
+        .chat-bubble-user {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 18px 18px 0 18px;
+        }
+
+        .chat-bubble-ai {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            color: #1a202c;
+            border-radius: 18px 18px 18px 0;
+        }
+
+        .dark .chat-bubble-ai {
+            color: #1a202c;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E0;
+            border-radius: 4px;
+        }
+
+        .dark ::-webkit-scrollbar-thumb {
+            background: #4A5568;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #A0AEC0;
+        }
+
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #718096;
+        }
+
+        /* Typing Animation */
+        .typing-animation {
+            display: inline-block;
+        }
+
+        .typing-dot {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            margin-right: 3px;
+            background-color: #718096;
+            animation: typing 1.5s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+            margin-right: 0;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Notification styles */
+        .notification {
+            transform: translateY(-100%);
+            transition: transform 0.4s ease;
+        }
+
+        .notification.show {
+            transform: translateY(0);
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+
+        .dark .spinner {
+            border-color: rgba(255, 255, 255, 0.1);
+            border-top-color: var(--primary-color);
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 25px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 17px;
+            width: 17px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--primary-color);
+        }
+
+        input:focus + .toggle-slider {
+            box-shadow: 0 0 1px var(--primary-color);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(25px);
+        }
+
+        /* Star Rating */
+        .star-rating {
+            display: inline-flex;
+            font-size: 1.5rem;
+            color: #d1d5db;
+        }
+
+        .star-rating > i {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .star-rating > i.active {
+            color: #fbbf24;
+        }
+
+        .star-rating > i:hover,
+        .star-rating > i:hover ~ i.active {
+            color: #f59e0b;
+        }
+
+        /* Touch animations for mobile */
+        @media (hover: none) {
+            .touch-effect {
+                position: relative;
+                overflow: hidden;
+            }
+
+            .touch-effect:after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 5px;
+                height: 5px;
+                background: rgba(255, 255, 255, 0.5);
+                opacity: 0;
+                border-radius: 100%;
+                transform: scale(1, 1) translate(-50%, -50%);
+                transform-origin: 50% 50%;
+            }
+
+            .touch-effect:active:after {
+                animation: ripple 0.4s ease-out;
+            }
+
+            @keyframes ripple {
+                0% {
+                    transform: scale(0, 0);
+                    opacity: 0.5;
+                }
+                100% {
+                    transform: scale(20, 20);
+                    opacity: 0;
+                }
+            }
+        }
+
+        /* History item hover effect */
+        .history-item {
+            transition: all 0.3s ease;
+        }
+
+        .history-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Form elements focus states */
+        .form-select:focus, .form-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        
+        /* Watermark styles */
+        .watermark {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            font-size: 14px;
+            opacity: 0.7;
+            z-index: 100;
+            pointer-events: none;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .dark .watermark {
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .light .watermark {
+            color: rgba(0,0,0,0.5);
+        }
+        
+        /* Social share buttons */
+        .social-share-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .social-share-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .social-share-btn.facebook {
+            background-color: #3b5998;
+            color: white;
+        }
+        
+        .social-share-btn.twitter {
+            background-color: #1da1f2;
+            color: white;
+        }
+        
+        .social-share-btn.linkedin {
+            background-color: #0077b5;
+            color: white;
+        }
+        
+        .social-share-btn.telegram {
+            background-color: #0088cc;
+            color: white;
+        }
+        
+        .social-share-btn.whatsapp {
+            background-color: #25d366;
+            color: white;
+        }
+        
+        /* Footer styles */
+        footer {
+            transition: background-color 0.3s;
+        }
+        
+        .light footer {
+            background-color: #f3f4f6;
+            color: var(--light-text);
+        }
+        
+        .dark footer {
+            background-color: #1f2937;
+            color: var(--dark-text);
+        }
+    </style>
+</head>
+<body class="light min-h-screen flex flex-col">
+    <!-- Watermark -->
+    <div class="watermark">
+        <span>Created by Sharof hasan</span>
+    </div>
+
+    <!-- Notification Area -->
+    <div id="notification" class="notification fixed top-0 left-0 right-0 z-50 p-4 text-white text-center hidden">
+        <div class="max-w-md mx-auto rounded-lg shadow-lg p-4 flex items-center justify-between">
+            <span id="notification-text"></span>
+            <button onclick="hideNotification()" class="ml-4 focus:outline-none">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="py-6 px-4 sm:px-6 lg:px-8 border-b transition-all">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between">
+            <div class="flex items-center">
+                <i class="fas fa-robot text-2xl mr-3 text-blue-500"></i>
+                <h1 class="text-2xl font-bold">Chatbot API Key Tester</h1>
+            </div>
+            <div class="flex items-center mt-4 sm:mt-0">
+                <div class="flex space-x-3 mr-4">
+                    <a href="https://www.facebook.com/share/15HRMMneHd/" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-600 transition-colors" aria-label="Facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://t.me/D4RK_SH4R0F2" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-400 transition-colors" aria-label="Telegram">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="mailto:sharofhasan8@gmail.com" class="text-gray-500 hover:text-red-500 transition-colors" aria-label="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+                <span class="mr-3 text-sm">
+                    <i class="far fa-sun light-icon"></i>
+                    <i class="far fa-moon dark-icon hidden"></i>
+                </span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow py-6 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- API Key Settings Section -->
+                <div class="lg:col-span-1">
+                    <div class="card rounded-lg shadow-md p-5 border transition-all mb-6">
+                        <h2 class="text-xl font-semibold mb-4">API Settings</h2>
+                        
+                        <div class="mb-4">
+                            <label for="api-key" class="block text-sm font-medium mb-1">API Key</label>
+                            <div class="relative">
+                                <input id="api-key" type="password" class="input-field w-full px-4 py-2 rounded-lg border focus:outline-none" placeholder="Enter your API key" aria-label="API Key">
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                    <button id="toggle-password" class="text-gray-500 hover:text-gray-700 focus:outline-none transition-colors" aria-label="Toggle password visibility">
+                                        <i class="far fa-eye"></i>
+                                    </button>
+                                    <button id="copy-api-key" class="ml-2 text-gray-500 hover:text-gray-700 focus:outline-none transition-colors" aria-label="Copy API key">
+                                        <i class="far fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="text-xs mt-1 text-gray-500 italic">Your API key is not stored or logged. It is only used for testing purposes.</p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="endpoint-select" class="block text-sm font-medium mb-1">API Endpoint</label>
+                            <div class="relative">
+                                <select id="endpoint-select" class="form-select input-field w-full px-4 py-2 rounded-lg border focus:outline-none appearance-none" aria-label="API Endpoint">
+                                    <option value="https://api.openai.com/v1/chat/completions">OpenAI API</option>
+                                    <option value="https://api.deepseek.com/v1/chat/completions">Deepseek API</option>
+                                    <option value="https://openrouter.ai/api/v1/chat/completions">OpenRouter API</option>
+                                    <option value="custom">Custom Endpoint</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                            </div>
+                            <input id="custom-endpoint" type="text" class="input-field w-full px-4 py-2 rounded-lg border focus:outline-none mt-2 hidden" placeholder="Enter custom endpoint" aria-label="Custom API Endpoint">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="model-select" class="block text-sm font-medium mb-1">Model</label>
+                            <div class="relative">
+                                <select id="model-select" class="form-select input-field w-full px-4 py-2 rounded-lg border focus:outline-none appearance-none" aria-label="Model Selection">
+                                    <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                                    <option value="deepseek-reasoner">Deepseek Reasoner</option>
+                                    <option value="deepseek/deepseek-r1:free">Deepseek R1 Free</option>
+                                    <option value="gpt-4">GPT-4</option>
+                                    <option value="custom">Custom Model</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                            </div>
+                            <input id="custom-model" type="text" class="input-field w-full px-4 py-2 rounded-lg border focus:outline-none mt-2 hidden" placeholder="Enter custom model" aria-label="Custom Model">
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-2">
+                            <button id="test-api-btn" class="btn bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-all focus:outline-none flex items-center touch-effect" aria-label="Test API Key">
+                                <i class="fas fa-key mr-2"></i>
+                                <span>Test API Key</span>
+                            </button>
+                            <button id="clear-fields-btn" class="btn bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition-all focus:outline-none flex items-center touch-effect" aria-label="Clear Fields">
+                                <i class="fas fa-eraser mr-2"></i>
+                                <span>Clear Fields</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Test History Section -->
+                    <div class="card rounded-lg shadow-md p-5 border transition-all mb-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl font-semibold">Test History</h2>
+                            <button id="clear-history-btn" class="text-sm text-red-500 hover:text-red-700 focus:outline-none transition-colors" aria-label="Clear History">
+                                <i class="fas fa-trash-alt mr-1"></i> Clear
+                            </button>
+                        </div>
+                        <div id="history-container" class="max-h-80 overflow-y-auto">
+                            <div class="text-center text-gray-500 py-4">
+                                <i class="fas fa-history text-xl mb-2"></i>
+                                <p>No test history yet</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Social Share Section -->
+                    <div class="card rounded-lg shadow-md p-5 border transition-all">
+                        <h2 class="text-xl font-semibold mb-4">Share This Tool</h2>
+                        <div class="flex flex-wrap gap-3 justify-center">
+                            <a href="#" onclick="shareOnFacebook(); return false;" class="social-share-btn facebook" title="Share on Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" onclick="shareOnTwitter(); return false;" class="social-share-btn twitter" title="Share on Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" onclick="shareOnLinkedIn(); return false;" class="social-share-btn linkedin" title="Share on LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" onclick="shareOnTelegram(); return false;" class="social-share-btn telegram" title="Share on Telegram">
+                                <i class="fab fa-telegram-plane"></i>
+                            </a>
+                            <a href="#" onclick="shareOnWhatsApp(); return false;" class="social-share-btn whatsapp" title="Share on WhatsApp">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Interface Section -->
+                <div class="lg:col-span-2">
+                    <div class="card rounded-lg shadow-md border h-full flex flex-col transition-all">
+                        <div class="p-5 border-b flex justify-between items-center">
+                            <h2 class="text-xl font-semibold">Chat Interface</h2>
+                            <div class="flex gap-2">
+                                <button id="download-chat-btn" class="btn text-blue-500 hover:text-blue-700 focus:outline-none transition-colors" aria-label="Download Chat">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button id="clear-chat-btn" class="btn text-red-500 hover:text-red-700 focus:outline-none transition-colors" aria-label="Clear Chat">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="chat-container" class="flex-grow p-5 overflow-y-auto space-y-4">
+                            <div class="text-center text-gray-500 py-10">
+                                <i class="fas fa-comment-dots text-4xl mb-3"></i>
+                                <p class="mb-2">Test your API key to start chatting</p>
+                                <p class="text-sm">Your messages and the AI responses will appear here</p>
+                            </div>
+                        </div>
+                        
+                        <div class="p-5 border-t">
+                            <form id="chat-form" class="flex gap-2">
+                                <input id="message-input" type="text" class="input-field flex-grow px-4 py-2 rounded-lg border focus:outline-none" placeholder="Type a message..." disabled aria-label="Message Input">
+                                <button type="submit" id="send-message-btn" class="btn bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-all focus:outline-none touch-effect" disabled aria-label="Send Message">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rating & Feedback Section -->
+            <div class="card rounded-lg shadow-md p-5 border transition-all mt-6">
+                <h2 class="text-xl font-semibold mb-4">Rate & Provide Feedback</h2>
+                <div class="flex flex-col sm:flex-row sm:items-start gap-6">
+                    <div class="w-full sm:w-1/3">
+                        <p class="text-sm mb-2">How would you rate this tool?</p>
+                        <div class="star-rating">
+                            <i class="far fa-star" data-rating="1"></i>
+                            <i class="far fa-star" data-rating="2"></i>
+                            <i class="far fa-star" data-rating="3"></i>
+                            <i class="far fa-star" data-rating="4"></i>
+                            <i class="far fa-star" data-rating="5"></i>
+                        </div>
+                        <p id="rating-text" class="text-sm mt-2 text-gray-500">Not rated yet</p>
+                    </div>
+                    <div class="w-full sm:w-2/3">
+                        <form id="feedback-form" action="https://formspree.io/f/mnnpwlpj" method="POST" class="grid grid-cols-1 gap-4">
+                            <div>
+                                <label for="feedback-email" class="block text-sm font-medium mb-1">Your Email (optional)</label>
+                                <input id="feedback-email" name="email" type="email" class="input-field w-full px-4 py-2 rounded-lg border focus:outline-none" placeholder="your@email.com">
+                            </div>
+                            <div>
+                                <label for="feedback-text" class="block text-sm font-medium mb-1">Your Feedback</label>
+                                <textarea id="feedback-text" name="feedback" rows="4" class="input-field w-full px-4 py-2 rounded-lg border focus:outline-none" placeholder="Tell us what you think or suggest improvements..."></textarea>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-all focus:outline-none flex items-center touch-effect">
+                                    <i class="fas fa-paper-plane mr-2"></i>
+                                    <span>Send Feedback</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Use Section -->
+            <div class="card rounded-lg shadow-md p-5 border transition-all mt-6">
+                <h2 class="text-xl font-semibold mb-4">How to Use</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="p-4 rounded-lg border bg-opacity-50 bg-blue-50 dark:bg-blue-900 dark:bg-opacity-20">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-blue-100 dark:bg-blue-800 rounded-full w-9 h-9 flex items-center justify-center mr-3">
+                                <i class="fas fa-key text-blue-500"></i>
+                            </div>
+                            <h3 class="font-medium">Enter API Key</h3>
+                        </div>
+                        <p class="text-sm">Input your API key in the field and select your preferred endpoint and model from the dropdown menus.</p>
+                    </div>
+                    <div class="p-4 rounded-lg border bg-opacity-50 bg-green-50 dark:bg-green-900 dark:bg-opacity-20">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 dark:bg-green-800 rounded-full w-9 h-9 flex items-center justify-center mr-3">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                            </div>
+                            <h3 class="font-medium">Test Connection</h3>
+                        </div>
+                        <p class="text-sm">Click the "Test API Key" button to verify your API key works correctly with the selected endpoint and model.</p>
+                    </div>
+                    <div class="p-4 rounded-lg border bg-opacity-50 bg-purple-50 dark:bg-purple-900 dark:bg-opacity-20">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-purple-100 dark:bg-purple-800 rounded-full w-9 h-9 flex items-center justify-center mr-3">
+                                <i class="fas fa-comment-dots text-purple-500"></i>
+                            </div>
+                            <h3 class="font-medium">Start Chatting</h3>
+                        </div>
+                        <p class="text-sm">Once validated, the chat interface will be enabled. Type messages and get responses from the AI using your API.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-8 py-6 px-4 sm:px-6 lg:px-8 border-t">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <i class="fas fa-robot text-xl mr-2 text-blue-500"></i>
+                    <span class="text-lg font-semibold">Chatbot API Key Tester</span>
+                </div>
+                <div class="flex flex-col items-center md:items-end">
+                    <p class="text-sm mb-2">Contact Information</p>
+                    <div class="flex space-x-4">
+                        <a href="mailto:sharofhasan8@gmail.com" class="text-sm hover:underline flex items-center">
+                            <i class="fas fa-envelope mr-1"></i> sharofhasan8@gmail.com
+                        </a>
+                        <a href="https://www.facebook.com/share/15HRMMneHd/" target="_blank" rel="noopener noreferrer" class="text-sm hover:underline flex items-center">
+                            <i class="fab fa-facebook mr-1"></i> Facebook
+                        </a>
+                        <a href="https://t.me/D4RK_SH4R0F2" target="_blank" rel="noopener noreferrer" class="text-sm hover:underline flex items-center">
+                            <i class="fab fa-telegram mr-1"></i> Telegram
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 text-center">
+                <p class="text-sm">&copy; 2023 Chatbot API Key Tester by Sharof hasan. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const lightIcon = document.querySelector('.light-icon');
+        const darkIcon = document.querySelector('.dark-icon');
+        
+        // Load saved theme from localStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.classList.remove('light');
+                body.classList.add('dark');
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
+                themeToggle.checked = true;
+            }
+            
+            // Load saved rating
+            const savedRating = localStorage.getItem('rating');
+            if (savedRating) {
+                updateStarRating(parseInt(savedRating));
+            }
+        });
+        
+        themeToggle.addEventListener('change', () => {
+            if (themeToggle.checked) {
+                body.classList.remove('light');
+                body.classList.add('dark');
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.remove('dark');
+                body.classList.add('light');
+                lightIcon.classList.remove('hidden');
+                darkIcon.classList.add('hidden');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        
+        // API Key Toggle Visibility
+        const apiKeyInput = document.getElementById('api-key');
+        const togglePasswordBtn = document.getElementById('toggle-password');
+        const togglePasswordIcon = togglePasswordBtn.querySelector('i');
+        
+        togglePasswordBtn.addEventListener('click', () => {
+            if (apiKeyInput.type === 'password') {
+                apiKeyInput.type = 'text';
+                togglePasswordIcon.classList.remove('fa-eye');
+                togglePasswordIcon.classList.add('fa-eye-slash');
+            } else {
+                apiKeyInput.type = 'password';
+                togglePasswordIcon.classList.remove('fa-eye-slash');
+                togglePasswordIcon.classList.add('fa-eye');
+            }
+        });
+        
+        // Copy API Key
+        const copyApiKeyBtn = document.getElementById('copy-api-key');
+        copyApiKeyBtn.addEventListener('click', () => {
+            apiKeyInput.select();
+            document.execCommand('copy');
+            showNotification('API key copied to clipboard', 'success');
+        });
+        
+        // Custom Endpoint
+        const endpointSelect = document.getElementById('endpoint-select');
+        const customEndpointInput = document.getElementById('custom-endpoint');
+        
+        endpointSelect.addEventListener('change', () => {
+            if (endpointSelect.value === 'custom') {
+                customEndpointInput.classList.remove('hidden');
+            } else {
+                customEndpointInput.classList.add('hidden');
+            }
+        });
+        
+        // Custom Model
+        const modelSelect = document.getElementById('model-select');
+        const customModelInput = document.getElementById('custom-model');
+        
+        modelSelect.addEventListener('change', () => {
+            if (modelSelect.value === 'custom') {
+                customModelInput.classList.remove('hidden');
+            } else {
+                customModelInput.classList.add('hidden');
+            }
+        });
+        
+        // Clear fields button
+        const clearFieldsBtn = document.getElementById('clear-fields-btn');
+        clearFieldsBtn.addEventListener('click', () => {
+            apiKeyInput.value = '';
+            endpointSelect.value = 'https://api.openai.com/v1/chat/completions';
+            modelSelect.value = 'gpt-3.5-turbo';
+            customEndpointInput.value = '';
+            customModelInput.value = '';
+            customEndpointInput.classList.add('hidden');
+            customModelInput.classList.add('hidden');
+        });
+        
+        // Star Rating
+        const stars = document.querySelectorAll('.star-rating > i');
+        const ratingText = document.getElementById('rating-text');
+        const ratingDescriptions = [
+            'Not rated yet',
+            'Poor - Needs significant improvement',
+            'Fair - Works but has issues',
+            'Good - Works as expected',
+            'Very good - Impressed with the tool',
+            'Excellent - Exceeds expectations'
+        ];
+        
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = parseInt(this.getAttribute('data-rating'));
+                updateStarRating(rating);
+                localStorage.setItem('rating', rating.toString());
+            });
+        });
+        
+        function updateStarRating(rating) {
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.remove('far');
+                    star.classList.add('fas', 'active');
+                } else {
+                    star.classList.remove('fas', 'active');
+                    star.classList.add('far');
+                }
+            });
+            ratingText.textContent = ratingDescriptions[rating];
+        }
+        
+        // Test API Button
+        const testApiBtn = document.getElementById('test-api-btn');
+        const messageInput = document.getElementById('message-input');
+        const sendMessageBtn = document.getElementById('send-message-btn');
+        const chatContainer = document.getElementById('chat-container');
+        
+        testApiBtn.addEventListener('click', function() {
+            const apiKey = apiKeyInput.value.trim();
+            if (!apiKey) {
+                showNotification('Please enter an API key', 'error');
+                return;
+            }
+            
+            // Get selected endpoint
+            let endpoint = endpointSelect.value;
+            if (endpoint === 'custom') {
+                endpoint = customEndpointInput.value.trim();
+                if (!endpoint) {
+                    showNotification('Please enter a custom endpoint', 'error');
+                    return;
+                }
+            }
+            
+            // Get selected model
+            let model = modelSelect.value;
+            if (model === 'custom') {
+                model = customModelInput.value.trim();
+                if (!model) {
+                    showNotification('Please enter a custom model', 'error');
+                    return;
+                }
+            }
+            
+            // Show loading state
+            testApiBtn.disabled = true;
+            testApiBtn.innerHTML = '<div class="spinner mr-2"></div><span>Testing...</span>';
+            
+            // Simulate API test (in a real app, you'd make an actual API call)
+            setTimeout(() => {
+                // Add test to history
+                addTestToHistory(endpoint, model, true);
+                
+                // Enable chat
+                messageInput.disabled = false;
+                sendMessageBtn.disabled = false;
+                
+                // Clear chat container
+                chatContainer.innerHTML = '';
+                
+                // Show success message
+                showNotification('API key tested successfully! You can now start chatting.', 'success');
+                
+                // Add welcome message
+                addMessageToChat('Hello! I am an AI assistant. How can I help you today?', 'ai');
+                
+                // Reset button state
+                testApiBtn.disabled = false;
+                testApiBtn.innerHTML = '<i class="fas fa-key mr-2"></i><span>Test API Key</span>';
+            }, 1500);
+        });
+        
+        // History functions
+        const historyContainer = document.getElementById('history-container');
+        const clearHistoryBtn = document.getElementById('clear-history-btn');
+        
+        function addTestToHistory(endpoint, model, success) {
+            const emptyState = historyContainer.querySelector('.text-center');
+            if (emptyState) {
+                historyContainer.innerHTML = '';
+            }
+            
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            const dateString = now.toLocaleDateString();
+            
+            const historyItem = document.createElement('div');
+            historyItem.className = 'history-item p-3 border-b last:border-b-0 flex justify-between items-center';
+            
+            const endpointName = getEndpointDisplayName(endpoint);
+            
+            historyItem.innerHTML = `
+                <div>
+                    <div class="flex items-center">
+                        <i class="fas fa-${success ? 'check-circle text-green-500' : 'times-circle text-red-500'} mr-2"></i>
+                        <span class="font-medium">${endpointName}</span>
+                    </div>
+                    <div class="text-xs text-gray-500">Model: ${model}</div>
+                    <div class="text-xs text-gray-500">${dateString} at ${timeString}</div>
+                </div>
+                <button class="reuse-test-btn text-blue-500 hover:text-blue-700 focus:outline-none">
+                    <i class="fas fa-redo-alt"></i>
+                </button>
+            `;
+            
+            historyContainer.prepend(historyItem);
+            
+            // Add reuse functionality
+            const reuseBtn = historyItem.querySelector('.reuse-test-btn');
+            reuseBtn.addEventListener('click', () => {
+                endpointSelect.value = endpoint;
+                modelSelect.value = model;
+                
+                if (endpoint === 'custom') {
+                    customEndpointInput.classList.remove('hidden');
+                    customEndpointInput.value = endpoint;
+                } else {
+                    customEndpointInput.classList.add('hidden');
+                }
+                
+                if (model === 'custom') {
+                    customModelInput.classList.remove('hidden');
+                    customModelInput.value = model;
+                } else {
+                    customModelInput.classList.add('hidden');
+                }
+                
+                showNotification('Test configuration loaded', 'info');
+            });
+        }
+        
+        function getEndpointDisplayName(endpoint) {
+            const endpointMap = {
+                'https://api.openai.com/v1/chat/completions': 'OpenAI API',
+                'https://api.deepseek.com/v1/chat/completions': 'Deepseek API',
+                'https://openrouter.ai/api/v1/chat/completions': 'OpenRouter API'
+            };
+            
+            return endpointMap[endpoint] || 'Custom API';
+        }
+        
+        clearHistoryBtn.addEventListener('click', () => {
+            historyContainer.innerHTML = `
+                <div class="text-center text-gray-500 py-4">
+                    <i class="fas fa-history text-xl mb-2"></i>
+                    <p>No test history yet</p>
+                </div>
+            `;
+            showNotification('History cleared', 'info');
+        });
+        
+        // Chat functions
+        const chatForm = document.getElementById('chat-form');
+        const clearChatBtn = document.getElementById('clear-chat-btn');
+        const downloadChatBtn = document.getElementById('download-chat-btn');
+        
+        chatForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const message = messageInput.value.trim();
+            if (!message) return;
+            
+            // Add user message to chat
+            addMessageToChat(message, 'user');
+            
+            // Clear input
+            messageInput.value = '';
+            
+            // Disable input and show typing indicator
+            messageInput.disabled = true;
+            sendMessageBtn.disabled = true;
+            showTypingIndicator();
+            
+            // Simulate AI response (in a real app, you'd make an actual API call)
+            setTimeout(() => {
+                // Remove typing indicator
+                removeTypingIndicator();
+                
+                // Enable input
+                messageInput.disabled = false;
+                sendMessageBtn.disabled = false;
+                
+                // Focus input
+                messageInput.focus();
+                
+                // Add AI response
+                const responses = [
+                    "I understand what you're asking. Let me help you with that.",
+                    "That's an interesting question! Here's what I found:",
+                    "Based on my knowledge, I can tell you that...",
+                    "I'd be happy to help you with this request.",
+                    "Let me process that and give you a thoughtful response."
+                ];
+                
+                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                addMessageToChat(randomResponse + " This is a simulated response as this is a demo tool for testing API keys. In a real implementation, this would be the response from the actual AI model through your API key.", 'ai');
+            }, 1500);
+        });
+        
+        function addMessageToChat(message, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.className = `max-w-3/4 ${sender === 'user' ? 'ml-auto' : 'mr-auto'}`;
+            
+            const bubbleClass = sender === 'user' ? 'chat-bubble-user' : 'chat-bubble-ai';
+            
+            messageElement.innerHTML = `
+                <div class="${bubbleClass} p-3 rounded-lg shadow-sm">
+                    <p>${formatMessage(message)}</p>
+                    <div class="text-xs opacity-70 text-right mt-1">
+                        ${new Date().toLocaleTimeString()}
+                    </div>
+                </div>
+            `;
+            
+            chatContainer.appendChild(messageElement);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        function formatMessage(message) {
+            // Convert URLs to clickable links
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            return message.replace(urlRegex, function(url) {
+                return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="underline text-blue-500 hover:text-blue-700">${url}</a>`;
+            });
+        }
+        
+        function showTypingIndicator() {
+            const typingElement = document.createElement('div');
+            typingElement.id = 'typing-indicator';
+            typingElement.className = 'mr-auto';
+            
+            typingElement.innerHTML = `
+                <div class="chat-bubble-ai p-3 rounded-lg shadow-sm">
+                    <div class="typing-animation">
+                        <span class="typing-dot"></span>
+                        <span class="typing-dot"></span>
+                        <span class="typing-dot"></span>
+                    </div>
+                </div>
+            `;
+            
+            chatContainer.appendChild(typingElement);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+        
+        clearChatBtn.addEventListener('click', () => {
+            chatContainer.innerHTML = `
+                <div class="text-center text-gray-500 py-10">
+                    <i class="fas fa-comment-dots text-4xl mb-3"></i>
+                    <p class="mb-2">Chat cleared</p>
+                    <p class="text-sm">Send a message to start a new conversation</p>
+                </div>
+            `;
+            showNotification('Chat cleared', 'info');
+        });
+        
+        downloadChatBtn.addEventListener('click', () => {
+            const chat = chatContainer.innerHTML;
+            if (chat.includes('Chat cleared') || chat.includes('Test your API key')) {
+                showNotification('No chat to download', 'error');
+                return;
+            }
+            
+            // Process chat content to extract messages
+            const chatText = Array.from(chatContainer.querySelectorAll('.chat-bubble-user, .chat-bubble-ai'))
+                .map(bubble => {
+                    const isUser = bubble.classList.contains('chat-bubble-user');
+                    const text = bubble.querySelector('p').textContent;
+                    return `${isUser ? 'You' : 'AI'}: ${text}\n`;
+                })
+                .join('\n');
+            
+            // Create a blob and download link
+            const blob = new Blob([chatText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `chat-export-${new Date().toISOString().slice(0, 10)}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification('Chat downloaded successfully', 'success');
+        });
+        
+        // Notification function
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notification-text');
+        
+        function showNotification(message, type) {
+            notificationText.textContent = message;
+            
+            // Set color based on type
+            notification.className = 'notification fixed top-0 left-0 right-0 z-50 p-4 text-white text-center';
+            
+            if (type === 'success') {
+                notification.firstElementChild.className = 'max-w-md mx-auto rounded-lg shadow-lg p-4 flex items-center justify-between bg-green-500';
+            } else if (type === 'error') {
+                notification.firstElementChild.className = 'max-w-md mx-auto rounded-lg shadow-lg p-4 flex items-center justify-between bg-red-500';
+            } else if (type === 'info') {
+                notification.firstElementChild.className = 'max-w-md mx-auto rounded-lg shadow-lg p-4 flex items-center justify-between bg-blue-500';
+            } else {
+                notification.firstElementChild.className = 'max-w-md mx-auto rounded-lg shadow-lg p-4 flex items-center justify-between bg-gray-700';
+            }
+            
+            notification.classList.add('show');
+            
+            setTimeout(hideNotification, 3000);
+        }
+        
+        function hideNotification() {
+            notification.classList.remove('show');
+        }
+        
+        // Feedback form handling
+        const feedbackForm = document.getElementById('feedback-form');
+        
+        feedbackForm.addEventListener('submit', function(e) {
+            // We're using Formspree, so we don't prevent default
+            // But we'll show a notification
+            showNotification('Thank you for your feedback!', 'success');
+        });
+        
+        // Social sharing functions
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.title);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+        
+        function shareOnTwitter() {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.title);
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${title}`, '_blank');
+        }
+        
+        function shareOnLinkedIn() {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.title);
+            const summary = encodeURIComponent('A tool to test Chatbot API keys with multiple endpoints and models.');
+            window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}&summary=${summary}`, '_blank');
+        }
+        
+        function shareOnTelegram() {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.title);
+            window.open(`https://t.me/share/url?url=${url}&text=${title}`, '_blank');
+        }
+        
+        function shareOnWhatsApp() {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.title);
+            window.open(`https://wa.me/?text=${title} ${url}`, '_blank');
+        }
+    </script>
+</body>
+</html>
